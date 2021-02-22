@@ -28,9 +28,15 @@ namespace TriangleInfo.Controllers
             double s = Math.Round(Math.Sqrt(p * ((p - side1) * (p - side2) * (p - side3))), 4);
             return $"{s}";
         }
+
         public string IsRightAngled(double side1, double side2, double side3)
         {
             return (side2 * side2 == (side1 * side1 + side3 * side3)).ToString();
+
+        public string IsIsosceles(double side1, double side2, double side3)
+        {
+            return (side1 == side3).ToString();
+
         }
     }
 }
