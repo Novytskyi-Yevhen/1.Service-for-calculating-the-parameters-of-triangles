@@ -11,9 +11,9 @@ namespace TriangleInfo.Controllers
 {
     public class TriangleController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<TriangleController> _logger;
 
-        public TriangleController(ILogger<HomeController> logger)
+        public TriangleController(ILogger<TriangleController> logger)
         {
             _logger = logger;
         }
@@ -22,6 +22,11 @@ namespace TriangleInfo.Controllers
         {
             return $"{id}";
         }
-       
+        public string Area(double side1, double side2, double side3)
+        {
+            double p = (side1 + side2 + side3) * 0.5;
+            double s = Math.Round(Math.Sqrt(p * ((p - side1) * (p - side2) * (p - side3))), 4);
+            return $"{s}";
+        }
     }
 }
