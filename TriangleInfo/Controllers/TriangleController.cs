@@ -18,15 +18,9 @@ namespace TriangleInfo.Controllers
             _logger = logger;
         }
 
-        public string Ret(int id)
-        {
-            return $"{id}";
-        }
         public string Area(double side1, double side2, double side3)
         {
-            double p = (side1 + side2 + side3) * 0.5;
-            double s = Math.Round(Math.Sqrt(p * ((p - side1) * (p - side2) * (p - side3))), 4);
-            return $"{s}";
+            return $"{BufferArea(side1, side2, side3)}";
         }
 
         public string IsRightAngled(double side1, double side2, double side3)
@@ -36,7 +30,22 @@ namespace TriangleInfo.Controllers
         public string IsIsosceles(double side1, double side2, double side3)
         {
             return (side1 == side3).ToString();
+        }
+        public string Perimeter(int side1, int side2, int side3)
+        {
+            return $"{BufferPerimeter(side1, side2, side3)}";
+        }
 
+        [NonAction]
+        public double BufferArea(double side1, double side2, double side3)
+        {
+            double p = (side1 + side2 + side3) * 0.5;
+            return Math.Round(Math.Sqrt(p * ((p - side1) * (p - side2) * (p - side3))), 4);
+        }
+        [NonAction]
+        public int BufferPerimeter(int side1, int side2, int side3)
+        {
+            return side1 + side2 + side3;
         }
     }
 }
