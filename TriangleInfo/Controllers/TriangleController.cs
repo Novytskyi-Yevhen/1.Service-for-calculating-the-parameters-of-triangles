@@ -70,5 +70,11 @@ namespace TriangleInfo.Controllers
         {
             return (side1 == side2 && side2 == side3).ToString();
         }
+        [NonAction]
+        public string IsValidTriangle(int side1, int side2, int side3)
+        {
+            return ((side1 + side2) > side3 && (side1 + side3) > side2 && (side2+side3)>side1).ToString();
+            
+        }
     }
 }
