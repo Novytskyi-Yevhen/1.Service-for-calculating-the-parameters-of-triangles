@@ -47,6 +47,19 @@ namespace TriangleInfo.Controllers
         {
             return side1 + side2 + side3;
         }
+        public string Info(int side1, int side2, int side3)
+        {
+            double perimeter = BufferPerimeter(side1, side2, side3);
+            double areaTriangle = BufferArea(side1, side2, side3);
+            return "------------------------------------------------------------" + "\n" +
+                "Triangle:" + "\n" +
+                $"({side1}, {side2}, {side3})" + "\n" +
+                "Reduced:" + "\n" +
+                $"({side1 / perimeter}, {side2 / perimeter}, {side3 / perimeter})" + "\n" +
+                $"Area = {areaTriangle}" + "\n" +
+                $"Perimeter = {perimeter}" + "\n" +
+                "------------------------------------------------------------";
+        }
         public string IsEquilateral(int side1, int side2, int side3)
         {
             return (side1 == side2 && side2 == side3).ToString();
