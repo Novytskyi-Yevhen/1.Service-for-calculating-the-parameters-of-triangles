@@ -70,5 +70,11 @@ namespace TriangleInfo.Controllers
         {
             return (side1 == side2 && side2 == side3).ToString();
         }
+        public string GreatestByArea(TriangleClass[] tr)
+        {
+            List<double> areaTriangles = tr.Select(item => BufferArea(item.side1, item.side2, item.side3)).ToList();
+            int index = areaTriangles.IndexOf(areaTriangles.Max());
+            return Info(tr[index].side1, tr[index].side2, tr[index].side3);
+        }
     }
 }
