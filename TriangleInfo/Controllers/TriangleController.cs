@@ -145,7 +145,7 @@ namespace TriangleInfo.Controllers
             double sideTwo = array1[1] / array2[1];
             double sideThree = array1[2] / array2[2];
             return (sideOne == sideTwo && sideTwo == sideThree);
-
+        }
         public string GreatesByPerimeter(TriangleClass[] tr)
         {
             List<int> perimeterTriangles = tr.Select(item => BufferPerimeter(item.side1, item.side2, item.side3)).ToList();
