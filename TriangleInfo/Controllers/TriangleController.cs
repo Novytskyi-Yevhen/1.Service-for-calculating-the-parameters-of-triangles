@@ -92,5 +92,11 @@ namespace TriangleInfo.Controllers
             double sideThree = array1[2] / array2[2];
             return (sideOne == sideTwo && sideTwo == sideThree).ToString();
         }
+        public string GreatesByPerimeter(TriangleClass[] tr)
+        {
+            List<int> perimeterTriangles = tr.Select(item => BufferPerimeter(item.side1, item.side2, item.side3)).ToList();
+            int index = perimeterTriangles.IndexOf(perimeterTriangles.Max());
+            return Info(tr[index].side1, tr[index].side2, tr[index].side3);
+        }
     }
 }
