@@ -18,11 +18,18 @@ namespace TriangleInfo.Controllers
             _logger = logger;
         }
 
-        public string Area(double side1, double side2, double side3)
+        //public string Area(double side1, double side2, double side3)
+        //{
+        //    return $"{BufferArea(side1, side2, side3)}";
+        //}
+        public IActionResult Area(int side1, int side2, int side3)
         {
-            return $"{BufferArea(side1, side2, side3)}";
+            if (IsValidTriangle(side1, side2, side3))
+                return Ok($"{BufferArea(side1, side2, side3)}");
+            else
+                return BadRequest("ERROR!!!\n The triangle is invalid");
+            //        Json(new { status = "ERROR!!!", message = "The triangle is invalid" });
         }
-
         public string IsRightAngled(double side1, double side2, double side3)
         {
             return (side2 * side2 == (side1 * side1 + side3 * side3)).ToString();
@@ -86,9 +93,9 @@ namespace TriangleInfo.Controllers
             return (side1 == side2 && side2 == side3).ToString();
         }
         [NonAction]
-        public string IsValidTriangle(int side1, int side2, int side3)
+        public bool IsValidTriangle(int side1, int side2, int side3)
         {
-            return ((side1 + side2) > side3 && (side1 + side3) > side2 && (side2 + side3) > side1).ToString();
+            return (side1 + side2) > side3 && (side1 + side3) > side2 && (side2 + side3) > side1;
         }
         public string GreatestByArea(TriangleClass[] tr)
         {
