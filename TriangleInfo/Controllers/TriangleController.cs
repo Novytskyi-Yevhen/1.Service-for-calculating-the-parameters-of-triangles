@@ -47,6 +47,11 @@ namespace TriangleInfo.Controllers
         {
             return side1 + side2 + side3;
         }
+
+        public string Arecongruent(TriangleClass tr1, TriangleClass tr2)
+        {
+            return $"";
+
         public string Info(int side1, int side2, int side3)
         {
             double perimeter = BufferPerimeter(side1, side2, side3);
