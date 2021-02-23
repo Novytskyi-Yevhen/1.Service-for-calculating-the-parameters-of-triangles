@@ -74,7 +74,15 @@ namespace TriangleInfo.Controllers
         public string IsValidTriangle(int side1, int side2, int side3)
         {
             return ((side1 + side2) > side3 && (side1 + side3) > side2 && (side2+side3)>side1).ToString();
-            
+        }
+        public string AreSimilar(TriangleClass tr1, TriangleClass tr2)
+        {
+            var array1 = new double[] { tr1.side1, tr1.side2, tr1.side3 }.OrderBy(x => x).ToArray();
+            var array2 = new double[] { tr2.side1, tr2.side2, tr2.side3 }.OrderBy(x => x).ToArray();
+            double sideOne = array1[0] / array2[0];
+            double sideTwo = array1[1] / array2[1];
+            double sideThree = array1[2] / array2[2];
+            return (sideOne == sideTwo && sideTwo == sideThree).ToString();
         }
     }
 }
