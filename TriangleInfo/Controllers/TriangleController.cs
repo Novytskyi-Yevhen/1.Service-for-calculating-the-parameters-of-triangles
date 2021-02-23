@@ -50,8 +50,10 @@ namespace TriangleInfo.Controllers
 
         public string Arecongruent(TriangleClass tr1, TriangleClass tr2)
         {
-            return $"";
+            double[] array1 = new double[] { tr1.side1, tr1.side2, tr1.side3 }.OrderBy(x => x).ToArray();
+            double[] array2 = new double[] { tr2.side1, tr2.side2, tr2.side3 }.OrderBy(x => x).ToArray();
 
+            return $"{array1.SequenceEqual(array2)}";
         }
         public string Info(int side1, int side2, int side3)
         {
