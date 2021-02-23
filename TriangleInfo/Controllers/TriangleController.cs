@@ -68,6 +68,19 @@ namespace TriangleInfo.Controllers
                 $"Perimeter = {perimeter}" + "\n" +
                 "------------------------------------------------------------";
         }
+        public string Info(TriangleClass tr)
+        {
+            double perimeter = BufferPerimeter(tr.side1, tr.side2, tr.side3);
+            double areaTriangle = BufferArea(tr.side1, tr.side2, tr.side3);
+            return "------------------------------------------------------------" + "\n" +
+                "Triangle:" + "\n" +
+                $"({tr.side1}, {tr.side2}, {tr.side3})" + "\n" +
+                "Reduced:" + "\n" +
+                $"({tr.side1 / perimeter}, {tr.side2 / perimeter}, {tr.side3 / perimeter})" + "\n" +
+                $"Area = {areaTriangle}" + "\n" +
+                $"Perimeter = {perimeter}" + "\n" +
+                "------------------------------------------------------------";
+        }
         public string IsEquilateral(int side1, int side2, int side3)
         {
             return (side1 == side2 && side2 == side3).ToString();
@@ -75,7 +88,7 @@ namespace TriangleInfo.Controllers
         [NonAction]
         public string IsValidTriangle(int side1, int side2, int side3)
         {
-            return ((side1 + side2) > side3 && (side1 + side3) > side2 && (side2+side3)>side1).ToString();
+            return ((side1 + side2) > side3 && (side1 + side3) > side2 && (side2 + side3) > side1).ToString();
         }
         public string GreatestByArea(TriangleClass[] tr)
         {
@@ -92,11 +105,53 @@ namespace TriangleInfo.Controllers
             double sideThree = array1[2] / array2[2];
             return (sideOne == sideTwo && sideTwo == sideThree).ToString();
         }
+
+        public string PairwiseNonSimilar(TriangleClass[] tr)
+        {
+            List<TriangleClass[]> listPairwiseNonSimilarTriangle = new List<TriangleClass[]>();
+            var triang = tr;
+            string result = "";
+            foreach (var item1 in tr)
+            {
+                foreach (var item2 in triang)
+                {
+                    if (GetAreSimilar(item1, item2) )
+                    {
+                        continue;
+                    }
+                    listPairwiseNonSimilarTriangle.Add(new TriangleClass[] { item1, item2 });
+                    
+                }
+            }
+            
+
+            foreach (var item in listPairwiseNonSimilarTriangle)
+            {
+                foreach (var item2 in item)
+                {
+                    result += Info(item2);
+                    
+                }
+                result += "\n" + "****************" + "\n";
+            }
+            return result;
+
+        }
+        public bool GetAreSimilar(TriangleClass tr1, TriangleClass tr2)
+        {
+            var array1 = new double[] { tr1.side1, tr1.side2, tr1.side3 }.OrderBy(x => x).ToArray();
+            var array2 = new double[] { tr2.side1, tr2.side2, tr2.side3 }.OrderBy(x => x).ToArray();
+            double sideOne = array1[0] / array2[0];
+            double sideTwo = array1[1] / array2[1];
+            double sideThree = array1[2] / array2[2];
+            return (sideOne == sideTwo && sideTwo == sideThree);
+
         public string GreatesByPerimeter(TriangleClass[] tr)
         {
             List<int> perimeterTriangles = tr.Select(item => BufferPerimeter(item.side1, item.side2, item.side3)).ToList();
             int index = perimeterTriangles.IndexOf(perimeterTriangles.Max());
             return Info(tr[index].side1, tr[index].side2, tr[index].side3);
+
         }
     }
 }
