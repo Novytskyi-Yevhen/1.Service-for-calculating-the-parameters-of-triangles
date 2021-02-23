@@ -47,5 +47,9 @@ namespace TriangleInfo.Controllers
         {
             return side1 + side2 + side3;
         }
+        public string Arecongruent(TriangleClass tr1, TriangleClass tr2)
+        {
+            return $"";
+        }
     }
 }
