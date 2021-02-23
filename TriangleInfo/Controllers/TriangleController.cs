@@ -50,8 +50,10 @@ namespace TriangleInfo.Controllers
 
         public string Arecongruent(TriangleClass tr1, TriangleClass tr2)
         {
-            return $"";
+            double[] array1 = new double[] { tr1.side1, tr1.side2, tr1.side3 }.OrderBy(x => x).ToArray();
+            double[] array2 = new double[] { tr2.side1, tr2.side2, tr2.side3 }.OrderBy(x => x).ToArray();
 
+            return $"{array1.SequenceEqual(array2)}";
         }
         public string Info(int side1, int side2, int side3)
         {
@@ -103,6 +105,7 @@ namespace TriangleInfo.Controllers
             double sideThree = array1[2] / array2[2];
             return (sideOne == sideTwo && sideTwo == sideThree).ToString();
         }
+
         public string PairwiseNonSimilar(TriangleClass[] tr)
         {
             List<TriangleClass[]> listPairwiseNonSimilarTriangle = new List<TriangleClass[]>();
@@ -142,6 +145,13 @@ namespace TriangleInfo.Controllers
             double sideTwo = array1[1] / array2[1];
             double sideThree = array1[2] / array2[2];
             return (sideOne == sideTwo && sideTwo == sideThree);
+
+        public string GreatesByPerimeter(TriangleClass[] tr)
+        {
+            List<int> perimeterTriangles = tr.Select(item => BufferPerimeter(item.side1, item.side2, item.side3)).ToList();
+            int index = perimeterTriangles.IndexOf(perimeterTriangles.Max());
+            return Info(tr[index].side1, tr[index].side2, tr[index].side3);
+
         }
     }
 }
