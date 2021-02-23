@@ -52,6 +52,7 @@ namespace TriangleInfo.Controllers
         {
             return $"";
 
+        }
         public string Info(int side1, int side2, int side3)
         {
             double perimeter = BufferPerimeter(side1, side2, side3);
