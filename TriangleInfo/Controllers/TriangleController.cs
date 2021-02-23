@@ -105,20 +105,23 @@ namespace TriangleInfo.Controllers
         }
         public string PairwiseNonSimilar(TriangleClass[] tr)
         {
-            TriangleClass[] tr2 = tr;
             List<TriangleClass[]> listPairwiseNonSimilarTriangle = new List<TriangleClass[]>();
+            var triang = tr;
             string result = "";
             foreach (var item1 in tr)
             {
-                foreach (var item2 in tr2)
+                foreach (var item2 in triang)
                 {
-                    if (GetAreSimilar(item1, item2))
+                    if (GetAreSimilar(item1, item2) )
                     {
                         continue;
                     }
                     listPairwiseNonSimilarTriangle.Add(new TriangleClass[] { item1, item2 });
+                    
                 }
             }
+            
+
             foreach (var item in listPairwiseNonSimilarTriangle)
             {
                 foreach (var item2 in item)
