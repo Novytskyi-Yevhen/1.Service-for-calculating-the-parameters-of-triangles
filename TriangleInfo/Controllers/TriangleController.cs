@@ -27,7 +27,8 @@ namespace TriangleInfo.Controllers
             if (IsValidTriangle(side1, side2, side3))
                 return Ok($"{BufferArea(side1, side2, side3)}");
             else
-                return BadRequest("ERROR!!!\n The triangle is invalid");
+                return new RedirectToActionResult("Error", "Home", ""); //new BadRequestObjectResult(""); // new BadRequestResult();
+                //return BadRequest("ERROR!!!\n The triangle is invalid");
             //        Json(new { status = "ERROR!!!", message = "The triangle is invalid" });
         }
         public string IsRightAngled(double side1, double side2, double side3)
@@ -75,7 +76,7 @@ namespace TriangleInfo.Controllers
                 $"Perimeter = {perimeter}" + "\n" +
                 "------------------------------------------------------------";
         }
-        public string Info(TriangleClass tr)
+        public string Infos(TriangleClass tr)
         {
             double perimeter = BufferPerimeter(tr.side1, tr.side2, tr.side3);
             double areaTriangle = BufferArea(tr.side1, tr.side2, tr.side3);
@@ -115,30 +116,19 @@ namespace TriangleInfo.Controllers
 
         public string PairwiseNonSimilar(TriangleClass[] tr)
         {
-            List<TriangleClass[]> listPairwiseNonSimilarTriangle = new List<TriangleClass[]>();
+            List<TriangleClass> listPairwiseNonSimilarTriangle = new List<TriangleClass>();
             var triang = tr;
             string result = "";
-            foreach (var item1 in tr)
-            {
-                foreach (var item2 in triang)
-                {
-                    if (GetAreSimilar(item1, item2) )
-                    {
-                        continue;
-                    }
-                    listPairwiseNonSimilarTriangle.Add(new TriangleClass[] { item1, item2 });
-                    
-                }
-            }
+            //listPairwiseNonSimilarTriangle = tr.Aggregate((first, second) => GetAreSimilar(first,second) ? )
+            listPairwiseNonSimilarTriangle = tr.GroupBy(s => s).Where(g => g.Count() == 1 ).Select(g => g.Key).ToList();
             
+
+           
+
 
             foreach (var item in listPairwiseNonSimilarTriangle)
             {
-                foreach (var item2 in item)
-                {
-                    result += Info(item2);
-                    
-                }
+                result += Infos(item);
                 result += "\n" + "****************" + "\n";
             }
             return result;

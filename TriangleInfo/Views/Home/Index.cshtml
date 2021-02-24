@@ -2,7 +2,32 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<div class="text-left">
     <h1 class="display-4">Welcome to TriangleInfo</h1>
-    <p>Info about triangle <a href="http://localhost:44313/Triangle/Area?side1=10&side2=20&side3=25">building Web apps with ASP.NET Core</a>.</p>
+    <p>1 <a href="http://localhost:53367/triangle/Info?side1=10&side2=20&side3=25">Info about triangle</a>.</p>
+    <p>2 <a href="http://localhost:53367/triangle/Area?side1=10&side2=20&side3=25">Calculate the area of a triangle</a>.</p>
+    <p>3 <a href="http://localhost:53367/triangle/Perimeter?side1=10&side2=20&side3=25">Calculate the perimeter of a triangle</a>.</p>
+    <p>4.1 <a href="http://localhost:53367/triangle/IsRightAngled?side1=3&side2=5&side3=4">Return True or False depending on the triangle is right-angled or not</a>. - True</p>
+    <p>4.2 <a href="http://localhost:53367/triangle/IsRightAngled?side1=3&side2=5&side3=6">Return True or False depending on the triangle is right-angled or not</a>. - False</p>
+
+    <p>5.1 <a href="http://localhost:53367/triangle/IsEquilateral?side1=10&side2=10&side3=10">Return True or False depending on the triangle is equilateral or not</a>. - True</p>
+    <p>5.2 <a href="http://localhost:53367/triangle/IsEquilateral?side1=10&side2=12&side3=10">Return True or False depending on the triangle is equilateral or not</a>. - False</p>
+    <p>6.1 <a href="http://localhost:53367/triangle/IsIsosceles?side1=15&side2=20&side3=15">Return True or False depending on the triangle is isosceles or not</a>. - True</p>
+    <p>6.2 <a href="http://localhost:53367/triangle/IsIsosceles?side1=16&side2=20&side3=15">Return True or False depending on the triangle is isosceles or not</a>. - False</p>
+
+    <p>7.1 <a href="http://localhost:53367/triangle/arecongruent?tr1.side1=10&tr1.side2=20&tr1.side3=15&tr2.side1=15&tr2.side2=10&tr2.side3=20">Return True or False depending on two triangles are congruent or not</a>. - True</p>
+    <p>7.2 <a href="http://localhost:53367/triangle/arecongruent?tr1.side1=10&tr1.side2=20&tr1.side3=15&tr2.side1=15&tr2.side2=12&tr2.side3=20">Return True or False depending on two triangles are congruent or not</a>. - False</p>
+    
+    <p>8.1 <a href="http://localhost:53367/triangle/aresimilar?tr1.side1=10&tr1.side2=20&tr1.side3=15&tr2.side1=30&tr2.side2=20&tr2.side3=40">Return True or False depending on two triangles are similar or not</a>. - True</p>
+    <p>8.2 <a href="http://localhost:53367/triangle/aresimilar?tr1.side1=10&tr1.side2=20&tr1.side3=15&tr2.side1=15&tr2.side2=12&tr2.side3=20">Return True or False depending on two triangles are similar or not</a>. - False</p>
+    <p>9 <a href="http://localhost:53367/triangle/GreatesByPerimeter?tr[0].side1=10&tr[0].side2=20&tr[0].side3=12&tr[1].side1=10&tr[1].side2=20&tr[1].side3=25&tr[2].side1=10&tr[2].side2=18&tr[2].side3=22">Return the info about the triangle with greatest perimeter (given the array of triangles)</a>.</p>
+    <p>10 <a href="http://localhost:53367/triangle/GreatestByArea?tr[0].side1=10&tr[0].side2=20&tr[0].side3=12&tr[1].side1=10&tr[1].side2=20&tr[1].side3=25&tr[2].side1=10&tr[2].side2=18&tr[2].side3=22">Return the info about the triangle with greatest area (given the array of triangles)</a>.</p>
+    <p>11 <a href="http://localhost:53367/triangle/PairwiseNonSimilar?tr[0].side1=10&tr[0].side2=20&tr[0].side3=12&tr[1].side1=10&tr[1].side2=20&tr[1].side3=25&tr[2].side1=10&tr[2].side2=18&tr[2].side3=22">Return the info about the triangles chosen from the given array which are pairwise non-similar</a>.</p>
+    <p>12 <a href="http://localhost:53367/home/error">Call error</a>.</p>
+
+
+    
+    
+    
+
 </div>

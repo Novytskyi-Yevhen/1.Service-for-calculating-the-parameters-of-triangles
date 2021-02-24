@@ -50,7 +50,7 @@ namespace TriangleInfo
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Triangle}/{action=Area}");
+                    pattern: "{controller=Home}/{action=Index}");
             });
         }
     }
