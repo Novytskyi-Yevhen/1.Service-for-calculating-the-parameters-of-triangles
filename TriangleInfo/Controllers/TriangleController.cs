@@ -22,24 +22,43 @@ namespace TriangleInfo.Controllers
             return (side1 + side2) > side3 && (side1 + side3) > side2 && (side2 + side3) > side1;
         }
         [NonAction]
-        public double BufferArea(int side1, int side2, int side3)
+        public double GetArea(int side1, int side2, int side3)
         {
             double p = (side1 + side2 + side3) * 0.5;
             return Math.Round(Math.Sqrt(p * ((p - side1) * (p - side2) * (p - side3))), 4);
         }
         [NonAction]
-        public int BufferPerimeter(int side1, int side2, int side3)
+        public int GetPerimeter(int side1, int side2, int side3)
         {
             return side1 + side2 + side3;
         }
+        [NonAction]
+        public ActionResult<string> Infos(TriangleClass tr)
+        {
+            if (IsValidTriangle(tr.side1, tr.side2, tr.side3))
+                return Info(tr.side1, tr.side2, tr.side3);
+            return new RedirectToActionResult("Error", "Home", "");
+        }
+        [NonAction]
+        public bool GetAreSimilar(TriangleClass tr1, TriangleClass tr2)
+        {
+            var array1 = new double[] { tr1.side1, tr1.side2, tr1.side3 }.OrderBy(x => x).ToArray();
+            var array2 = new double[] { tr2.side1, tr2.side2, tr2.side3 }.OrderBy(x => x).ToArray();
+            double sideOne = array1[0] / array2[0];
+            double sideTwo = array1[1] / array2[1];
+            double sideThree = array1[2] / array2[2];
+            return sideOne == sideTwo && sideTwo == sideThree;
+        }
+
+
         public ActionResult<string> Info(int side1, int side2, int side3)
         {
             if (IsValidTriangle(side1, side2, side3))
             {
-                double perimeter = BufferPerimeter(side1, side2, side3);
-                double areaTriangle = BufferArea(side1, side2, side3);
+                double perimeter = GetPerimeter(side1, side2, side3);
+                double areaTriangle = GetArea(side1, side2, side3);
                 return
-                "------------------------------------------------------------" + "\n" +
+                    "------------------------------------------------------------" + "\n" +
                     "Triangle:" + "\n" +
                     $"({side1}, {side2}, {side3})" + "\n" +
                     "Reduced:" + "\n" +
@@ -53,13 +72,13 @@ namespace TriangleInfo.Controllers
         public IActionResult Area(int side1, int side2, int side3)
         {
             if (IsValidTriangle(side1, side2, side3))
-                return Ok($"{BufferArea(side1, side2, side3)}");
+                return Ok($"{GetArea(side1, side2, side3)}");
             return new RedirectToActionResult("Error", "Home", "");
         }
         public IActionResult Perimeter(int side1, int side2, int side3)
         {
             if (IsValidTriangle(side1, side2, side3))
-                return Ok($"{BufferPerimeter(side1, side2, side3)}");
+                return Ok($"{GetPerimeter(side1, side2, side3)}");
             return new RedirectToActionResult("Error", "Home", "");
         }
         public IActionResult IsRightAngled(int side1, int side2, int side3)
@@ -94,12 +113,7 @@ namespace TriangleInfo.Controllers
         {
             if (IsValidTriangle(tr1.side1, tr1.side2, tr1.side3) && IsValidTriangle(tr2.side1, tr2.side2, tr2.side3))
             {
-                var array1 = new double[] { tr1.side1, tr1.side2, tr1.side3 }.OrderBy(x => x).ToArray();
-                var array2 = new double[] { tr2.side1, tr2.side2, tr2.side3 }.OrderBy(x => x).ToArray();
-                double sideOne = array1[0] / array2[0];
-                double sideTwo = array1[1] / array2[1];
-                double sideThree = array1[2] / array2[2];
-                return Ok(sideOne == sideTwo && sideTwo == sideThree);
+                return Ok(GetAreSimilar(tr1, tr2));
             }
             return new RedirectToActionResult("Error", "Home", "");
         }
@@ -110,7 +124,7 @@ namespace TriangleInfo.Controllers
                 if (!IsValidTriangle(triangle.side1, triangle.side2, triangle.side3))
                     return new RedirectToActionResult("Error", "Home", "");
             }
-            List<int> perimeterTriangles = tr.Select(item => BufferPerimeter(item.side1, item.side2, item.side3)).ToList();
+            List<int> perimeterTriangles = tr.Select(item => GetPerimeter(item.side1, item.side2, item.side3)).ToList();
             int index = perimeterTriangles.IndexOf(perimeterTriangles.Max());
             return Info(tr[index].side1, tr[index].side2, tr[index].side3);
         }
@@ -121,16 +135,12 @@ namespace TriangleInfo.Controllers
                 if (!IsValidTriangle(triangle.side1, triangle.side2, triangle.side3))
                     return new RedirectToActionResult("Error", "Home", "");
             }
-            List<double> areaTriangles = tr.Select(item => BufferArea(item.side1, item.side2, item.side3)).ToList();
+            List<double> areaTriangles = tr.Select(item => GetArea(item.side1, item.side2, item.side3)).ToList();
             int index = areaTriangles.IndexOf(areaTriangles.Max());
             return Info(tr[index].side1, tr[index].side2, tr[index].side3);
         }
-        public ActionResult<string> Infos(TriangleClass tr)
-        {
-            if (IsValidTriangle(tr.side1, tr.side2, tr.side3))
-                return Info(tr.side1, tr.side2, tr.side3);
-            return new RedirectToActionResult("Error", "Home", "");
-        }
+
+
         public ActionResult<string> PairwiseNonSimilar(TriangleClass[] tr)
         {
             foreach (TriangleClass triangle in tr)
@@ -138,15 +148,40 @@ namespace TriangleInfo.Controllers
                 if (!IsValidTriangle(triangle.side1, triangle.side2, triangle.side3))
                     return new RedirectToActionResult("Error", "Home", "");
             }
-            List<TriangleClass> listPairwiseNonSimilarTriangle = new List<TriangleClass>();
             string result = "";
-            listPairwiseNonSimilarTriangle = tr.GroupBy(s => s).Where(g => g.Count() == 1).Select(g => g.Key).ToList();
+            List<TriangleClass> listPairwiseNonSimilarTriangle = GetListPairwiseNonSimilar(tr);
             foreach (var item in listPairwiseNonSimilarTriangle)
             {
+                if (item == listPairwiseNonSimilarTriangle.First())
+                    result += "*********************** New triangle ***********************" + "\n";
+                else
+                    result += "\n" + "*********************** New triangle ***********************" + "\n";
                 result += Infos(item).Value;
-                result += "\n" + "****************" + "\n";
             }
             return result;
         }
+        [NonAction]
+        public List<TriangleClass> GetListPairwiseNonSimilar(TriangleClass[] triangles)
+        {
+            List<TriangleClass> listPairwiseNonSimilarTriangle = new List<TriangleClass>();
+            foreach (var item in triangles)
+            {
+                bool isUnique = true;
+                for (int i = 0; i < triangles.Length; i++)
+                {
+                    if (i == Array.IndexOf(triangles, item))
+                        continue;
+                    if (GetAreSimilar(item, triangles[i]))
+                    {
+                        isUnique = false;
+                        break;
+                    }
+                }
+                if (isUnique)
+                    listPairwiseNonSimilarTriangle.Add(item);
+            }
+            return listPairwiseNonSimilarTriangle;
+        }
+
     }
 }
