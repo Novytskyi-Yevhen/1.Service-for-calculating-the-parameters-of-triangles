@@ -1,21 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using TriangleInfo.Models;
 
 namespace TriangleInfo.Controllers
 {
     public class TriangleController : Controller
     {
-        private readonly ILogger<TriangleController> _logger;
-        public TriangleController(ILogger<TriangleController> logger)
-        {
-            _logger = logger;
-        }
         [NonAction]
         public bool IsValidTriangle(int side1, int side2, int side3)
         {
