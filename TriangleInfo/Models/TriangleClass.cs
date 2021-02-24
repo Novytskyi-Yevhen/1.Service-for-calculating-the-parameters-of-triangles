@@ -10,12 +10,10 @@ namespace TriangleInfo.Controllers
         public int side1 { get; set; }
         public int side2 { get; set; }
         public int side3 { get; set; }
-
         public override bool Equals(object obj)
         {
             if (obj != null && obj is TriangleClass second)
                 return this.side1 == second.side1 && this.side2 == second.side2 && this.side3==second.side3;
-
             return this.GetHashCode() == obj.GetHashCode();    
         }
         public static bool operator ==(TriangleClass a, TriangleClass b)
